@@ -6,7 +6,6 @@ import ReactDOM from "react-dom";
 import MarkdownEditor from "./MarkdownEditor";
 import "./styles.css";
 
-
 function App() {
   return (
     <div className="app">
