@@ -1,57 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { marked } from "marked";
 
-export default function App() {
-  const [markdown, setMarkdown] = useState("# Hello, Markdown!");
+const App = () => {
+  const [markdown, setMarkdown] = useState(`# Welcome to Markdown Editor
 
-  // Convert markdown to HTML using marked
-  const getMarkdownText = () => {
-    const rawMarkup = marked(markdown, { breaks: true });
-    return { __html: rawMarkup };
-  };
+Type your **Markdown** text on the left. It will render _live_ on the right!
 
-  // Inline styles as JS objects
-  const styles = {
-    container: {
-      display: "flex",
-      gap: "10px",
-      padding: "10px",
-      height: "350px",
-      fontFamily: "Arial, sans-serif",
-    },
-    textarea: {
-      flex: 1,
-      padding: "10px",
-      fontSize: "16px",
-      resize: "none",
-      borderRadius: "4px",
-      border: "1px solid #ccc",
-      height: "100%",
-      boxSizing: "border-box",
-    },
-    preview: {
-      flex: 1,
-      padding: "10px",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-      height: "100%",
-      overflowY: "auto",
-      backgroundColor: "#f9f9f9",
-    },
+## Features
+- Real-time preview
+- Two-way binding
+- Uses React hooks
+- Styled with CSS classes
+
+> Happy writing!`);
+
+  const [html, setHtml] = useState("");
+
+  useEffect(() => {
+    // Convert markdown to HTML safely
+    setHtml(marked.parse(markdown));
+  }, [markdown]);
+
+  const handleChange = (e) => {
+    setMarkdown(e.target.value);
   };
 
   return (
-    <div style={styles.container} className="app">
+    <div className="app" style={{display: 'flex', height: '100vh'}}>
       <textarea
-        style={styles.textarea}
+        className="textarea"
         value={markdown}
-        onChange={(e) => setMarkdown(e.target.value)}
-        placeholder="Enter markdown here"
+        onChange={handleChange}
+        style={{
+          flex: 1,
+          padding: "1rem",
+          fontSize: "16px",
+          fontFamily: "monospace",
+          borderRight: "1px solid #ccc",
+          resize: "none",
+        }}
+        aria-label="Markdown input area"
       />
       <div
-        style={styles.preview}
-        dangerouslySetInnerHTML={getMarkdownText()}
+        className="preview"
+        style={{
+          flex: 1,
+          padding: "1rem",
+          overflowY: "auto",
+          backgroundColor: "#f5f5f5",
+        }}
+        dangerouslySetInnerHTML={{ __html: html }}
+        aria-label="Markdown preview area"
       />
     </div>
   );
-}
+};
+
+export default App;
