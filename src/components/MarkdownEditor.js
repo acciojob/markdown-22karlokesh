@@ -18,14 +18,14 @@ const MarkdownEditor = () => {
   return (
     <div className="editor-container">
       <textarea
-        className="textarea" // must be EXACTLY this
+        className="textarea"
         value={markdownText}
         onChange={(e) => setMarkdownText(e.target.value)}
         placeholder="Enter your Markdown here..."
       ></textarea>
-      <div className="preview"> {/* must be EXACTLY this */}
+      <div className="preview">
         {loading ? (
-          <div className="loading">Loading...</div> // must be EXACTLY this
+          <div className="loading">Loading...</div>
         ) : (
           <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
         )}
