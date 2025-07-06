@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from "react";
-import marked from "marked";
+import React, { useState, useEffect } from 'react';
+import { marked } from 'marked';
 
-export default function MarkdownEditor() {
-  const [markdown, setMarkdown] = useState("");
-  const [preview, setPreview] = useState("<p class='loading'>Loading...</p>");
+const MarkdownEditor = () => {
+  const [markdownText, setMarkdownText] = useState('');
+  const [previewHtml, setPreviewHtml] = useState('<p>Start typing Markdown...</p>');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const timeout = setTimeout(() => {
-      setPreview(marked(markdown));
-    }, 100); // debounce for smoother typing
+      setPreviewHtml(marked.parse(markdownText || 'Start typing Markdown...'));
+      setLoading(false);
+    }, 300); // simulate delay
     return () => clearTimeout(timeout);
-  }, [markdown]);
+  }, [markdownText]);
 
   return (
-    <>
+    <div className="editor-container">
       <textarea
         className="textarea"
-        value={markdown}
-        onChange={(e) => setMarkdown(e.target.value)}
-        placeholder="Type Markdown here..."
+        value={markdownText}
+        onChange={(e) => setMarkdownText(e.target.value)}
+        placeholder="Enter your Markdown here..."
       ></textarea>
-      <div
-        className="preview"
-        dangerouslySetInnerHTML={{ __html: preview }}
-      ></div>
-    </>
+      <div className="preview">
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
+        )}
+      </div>
+    </div>
   );
-}
+};
+
+export default MarkdownEditor;
