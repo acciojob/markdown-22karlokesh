@@ -18,14 +18,14 @@ const MarkdownEditor = () => {
   return (
     <div className="editor-container">
       <textarea
-        className="textarea" // REQUIRED for Cypress
+        className="textarea" // must be EXACTLY this
         value={markdownText}
         onChange={(e) => setMarkdownText(e.target.value)}
         placeholder="Enter your Markdown here..."
       ></textarea>
-      <div className="preview"> {/* REQUIRED for Cypress */}
+      <div className="preview"> {/* must be EXACTLY this */}
         {loading ? (
-          <div className="loading">Loading...</div> // REQUIRED for Cypress
+          <div className="loading">Loading...</div> // must be EXACTLY this
         ) : (
           <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
         )}
