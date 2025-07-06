@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { marked } from 'marked';
+import marked from 'marked';
 
 const MarkdownEditor = () => {
   const [markdownText, setMarkdownText] = useState('');
@@ -9,23 +9,23 @@ const MarkdownEditor = () => {
   useEffect(() => {
     setLoading(true);
     const timeout = setTimeout(() => {
-      setPreviewHtml(marked.parse(markdownText || 'Start typing Markdown...'));
+      setPreviewHtml(marked(markdownText || 'Start typing Markdown...'));
       setLoading(false);
-    }, 300); // simulate delay
+    }, 300);
     return () => clearTimeout(timeout);
   }, [markdownText]);
 
   return (
     <div className="editor-container">
       <textarea
-        className="textarea"
+        className="textarea" // REQUIRED for Cypress
         value={markdownText}
         onChange={(e) => setMarkdownText(e.target.value)}
         placeholder="Enter your Markdown here..."
       ></textarea>
-      <div className="preview">
+      <div className="preview"> {/* REQUIRED for Cypress */}
         {loading ? (
-          <div className="loading">Loading...</div>
+          <div className="loading">Loading...</div> // REQUIRED for Cypress
         ) : (
           <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
         )}
