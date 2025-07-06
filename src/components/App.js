@@ -4,7 +4,7 @@ import './styles.css';
 
 function App() {
   return (
-    <div className="app">  {/* EXACT class name */}
+    <div className="app"> {/* must be EXACTLY this */}
       <MarkdownEditor />
     </div>
   );
