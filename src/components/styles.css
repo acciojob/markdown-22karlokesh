@@ -1,25 +1,32 @@
 .app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.editor-container {
   display: flex;
-  flex-direction: row;
-  height: 100vh;
+  gap: 20px;
 }
 
 .textarea {
-  flex: 1;
-  padding: 20px;
-  font-size: 16px;
-  border: none;
-  border-right: 2px solid #ddd;
-  resize: none;
+  width: 50%;
+  height: 400px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  resize: vertical;
 }
 
 .preview {
-  flex: 1;
-  padding: 20px;
+  width: 50%;
+  height: 400px;
+  padding: 10px;
   overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
 }
 
 .loading {
-  font-style: italic;
   color: #888;
+  font-style: italic;
 }
