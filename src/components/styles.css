@@ -1,32 +1,37 @@
-.app {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
+import React, { useState, useEffect } from 'react';
+import marked from 'marked';
 
-.editor-container {
-  display: flex;
-  gap: 20px;
-}
+const MarkdownEditor = () => {
+  const [markdownText, setMarkdownText] = useState('');
+  const [previewHtml, setPreviewHtml] = useState('<p>Start typing Markdown...</p>');
+  const [loading, setLoading] = useState(false);
 
-.textarea {
-  width: 50%;
-  height: 400px;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  resize: vertical;
-}
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      setPreviewHtml(marked(markdownText || 'Start typing Markdown...'));
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [markdownText]);
 
-.preview {
-  width: 50%;
-  height: 400px;
-  padding: 10px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-}
+  return (
+    <div className="editor-container">
+      <textarea
+        className="textarea" // must be EXACTLY this
+        value={markdownText}
+        onChange={(e) => setMarkdownText(e.target.value)}
+        placeholder="Enter your Markdown here..."
+      ></textarea>
+      <div className="preview"> {/* must be EXACTLY this */}
+        {loading ? (
+          <div className="loading">Loading...</div> // must be EXACTLY this
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
+        )}
+      </div>
+    </div>
+  );
+};
 
-.loading {
-  color: #888;
-  font-style: italic;
-}
+export default MarkdownEditor;
